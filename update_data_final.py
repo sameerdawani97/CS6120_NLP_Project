@@ -8,7 +8,8 @@ with open(paths+"data/expanded_profanity_categories.json", "r") as file:
     expanded_categories = json.load(file)
 
 # Load the dataset to be updated
-dataset = pd.read_csv(paths+"data/test_data_2001_rows.csv")
+dataset = pd.read_csv(paths+"data/main_data_7676_rows.csv")
+#dataset = pd.read_csv(paths+"data/test_data_2001_rows.csv")
 
 # Set up Hugging Face Toxic-BERT pipeline with GPU
 toxicity_pipeline = pipeline(
@@ -86,7 +87,7 @@ for category, words in expanded_categories.items():
     dataset[max_severity_column] = dataset["lyrics"].apply(lambda x: calculate_max_severity(x, words))
 
 # Save the updated dataset to a new CSV file
-updated_dataset_filename = paths+"data/updated_counts_avg_max_severity_dataset.csv"
+updated_dataset_filename = paths+"data/updated_counts_avg_max_severity_dataset_main.csv"
 dataset.to_csv(updated_dataset_filename, index=False)
 
 print(f"Updated dataset saved to {updated_dataset_filename}")
